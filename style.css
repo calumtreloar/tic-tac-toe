@@ -10,21 +10,34 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
   margin: 0;
+  background-color: grad;
+  background-color: black;
+}
+
+h1 {
+  font-family: "Inter", sans-serif;
+  font-size: 3rem;
+  text-align: center;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #49ff18, 0 0 30px #49ff18,
+    0 0 40px #49ff18, 0 0 55px #49ff18, 0 0 75px #49ff18;
 }
 
 .board {
-  width: 100vw;
-  height: 100vh;
   display: grid;
   grid-template: repeat(3, auto) / repeat(3, auto);
   justify-content: center;
   align-content: center;
   align-items: center;
+  width: 100vw;
+  height: 80vh;
 }
 
 .game-grid-square {
-  border: 1px solid black;
+  border: 1px solid white;
   height: var(--square-size);
   width: var(--square-size);
   display: flex;
@@ -37,9 +50,6 @@ body {
 .game-grid-square.x,
 .game-grid-square.circle {
   cursor: not-allowed;
-}
-
-.board.x .game-grid-square:hover {
 }
 
 .game-grid-square:first-child,
@@ -63,15 +73,18 @@ body {
 }
 
 .game-grid-square.x::before,
-.game-grid-square.x::after,
+.game-grid-square.x::after {
+  background-color: red;
+}
+
 .game-grid-square.circle::before {
-  background-color: black;
+  background-color: white;
 }
 
 .board.x .game-grid-square:not(.x):not(.circle):hover::before,
 .board.x .game-grid-square:not(.x):not(.circle):hover::after,
 .board.circle .game-grid-square:not(.x):not(.circle):hover::before {
-  background-color: lightgrey;
+  background-color: rgb(255, 185, 255);
 }
 
 .game-grid-square.x::before,
@@ -111,9 +124,9 @@ body {
 
 .game-grid-square.circle::after,
 .board.circle .game-grid-square:not(.x):not(.circle):hover::after {
-  width: calc(var(--mark-size) * 0.7);
-  height: calc(var(--mark-size) * 0.7);
-  background-color: white;
+  width: calc(var(--mark-size) * 0.6);
+  height: calc(var(--mark-size) * 0.6);
+  background-color: black;
 }
 
 .winning-message {
@@ -129,9 +142,11 @@ body {
   align-items: center;
   color: white;
   font-size: 5rem;
+  font-family: "Inter", sans-serif;
 }
 
 .winning-message button {
+  font-family: "Inter", sans-serif;
   font-size: 3rem;
   background-color: white;
   border: 1px solid black;
