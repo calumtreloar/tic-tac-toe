@@ -3,6 +3,7 @@ const CIRCLE_CLASS = "circle";
 const squareElements = document.querySelectorAll("[data-square]");
 const board = document.getElementById("board");
 let circleTurn;
+let count = 0;
 const winningMessageElement = document.getElementById("winningMessage");
 const winningMessageTextElement = document.querySelector("[data-winning-message-text]");
 const restartButton = document.getElementById("restartButton");
@@ -20,10 +21,35 @@ const WINNING_COMBINATIONS = [
 
 startGame();
 
-restartButton.addEventListener("click", startGame);
+restartButton.addEventListener("click", restartGame);
 
+// Checks if count is even and alternates starting mark
 function startGame() {
+  if (count % 2 === 0) {
+    circleTurn = true;
+    count++;
+    console.log(count);
+  }
   circleTurn = false;
+  count++;
+  console.log(count);
+
+  squareElements.forEach((square) => {
+    square.classList.remove(X_CLASS);
+    square.classList.remove(CIRCLE_CLASS);
+    square.removeEventListener("click", handleClick);
+    square.addEventListener("click", handleClick, { once: true });
+  });
+  setBoardHoverClass();
+  winningMessageElement.classList.remove("show");
+}
+
+squareElements.forEach((square) => {
+  square.addEventListener("click", handleClick, { once: true });
+});
+
+// Resets the game
+function restartGame() {
   squareElements.forEach((square) => {
     square.classList.remove(X_CLASS);
     square.classList.remove(CIRCLE_CLASS);
@@ -41,9 +67,8 @@ squareElements.forEach((square) => {
 function handleClick(e) {
   const square = e.target;
   const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
-  // placeMark
   placeMark(square, currentClass);
-  // Check for Win
+  // Checks for a winner
   if (checkWin(currentClass)) {
     endGame(false);
   } else if (isDraw()) {
@@ -95,4 +120,9 @@ function checkWin(currentClass) {
       return squareElements[index].classList.contains(currentClass);
     });
   });
+}
+
+function isEven(num) {
+  num % 2 === 0;
+  return true;
 }
