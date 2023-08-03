@@ -1,0 +1,150 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --square-size: 100px;
+  --mark-size: calc(var(--square-size) * 0.9);
+}
+
+body {
+  margin: 0;
+}
+
+.board {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template: repeat(3, auto) / repeat(3, auto);
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.game-grid-square {
+  border: 1px solid black;
+  height: var(--square-size);
+  width: var(--square-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.game-grid-square.x,
+.game-grid-square.circle {
+  cursor: not-allowed;
+}
+
+.board.x .game-grid-square:hover {
+}
+
+.game-grid-square:first-child,
+.game-grid-square:nth-child(2),
+.game-grid-square:nth-child(3) {
+  border-top: none;
+}
+
+.game-grid-square:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.game-grid-square:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.game-grid-square:last-child,
+.game-grid-square:nth-child(8),
+.game-grid-square:nth-child(7) {
+  border-bottom: none;
+}
+
+.game-grid-square.x::before,
+.game-grid-square.x::after,
+.game-grid-square.circle::before {
+  background-color: black;
+}
+
+.board.x .game-grid-square:not(.x):not(.circle):hover::before,
+.board.x .game-grid-square:not(.x):not(.circle):hover::after,
+.board.circle .game-grid-square:not(.x):not(.circle):hover::before {
+  background-color: lightgrey;
+}
+
+.game-grid-square.x::before,
+.game-grid-square.x::after,
+.board.x .game-grid-square:not(.x):not(.circle):hover::before,
+.board.x .game-grid-square:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+}
+
+.game-grid-square.x::before,
+.board.x .game-grid-square:not(.x):not(.circle):hover::before {
+  transform: rotate(45deg);
+}
+
+.game-grid-square.x::after,
+.board.x .game-grid-square:not(.x):not(.circle):hover::after {
+  transform: rotate(-45deg);
+}
+
+.game-grid-square.circle::before,
+.game-grid-square.circle::after,
+.board.circle .game-grid-square:not(.x):not(.circle):hover::before,
+.board.circle .game-grid-square:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.game-grid-square.circle::before,
+.board.circle .game-grid-square:not(.x):not(.circle):hover::before {
+  width: var(--mark-size);
+  height: var(--mark-size);
+}
+
+.game-grid-square.circle::after,
+.board.circle .game-grid-square:not(.x):not(.circle):hover::after {
+  width: calc(var(--mark-size) * 0.7);
+  height: calc(var(--mark-size) * 0.7);
+  background-color: white;
+}
+
+.winning-message {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 5rem;
+}
+
+.winning-message button {
+  font-size: 3rem;
+  background-color: white;
+  border: 1px solid black;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+}
+
+.winning-message button:hover {
+  background-color: black;
+  color: white;
+  border-color: white;
+}
+
+.winning-message.show {
+  display: flex;
+}
